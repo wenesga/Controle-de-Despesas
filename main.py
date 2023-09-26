@@ -46,7 +46,7 @@ janela = Tk()
 
 
 janela.title("Minhas Finanças")
-janela.geometry('900x650')
+janela.geometry('900x670')
 janela.configure(background=co1)
 janela.iconbitmap('icone.ico')
 
@@ -370,92 +370,91 @@ def resumo():
     l_sumario.place(x=306, y=220)
 
 
+# ----------------------------------------------------------------------------------------
+
+# funcao grafico pie
+def grafico_pie():
+    # faça figura e atribua objetos de eixo
+    figura = plt.Figure(figsize=(5, 3), dpi=90)
+    ax = figura.add_subplot(111)
+    lista_valores = [345, 225, 534]
+    lista_categorias = ['Renda', 'Despesa', 'Saldo']
+
+    # only "explode" the 2nd slice (i.e. 'Hogs')
+    explode = []
+    for i in lista_categorias:
+        explode.append(0.05)
+    ax.pie(lista_valores, explode=explode, wedgeprops=dict(width=0.2),
+           autopct='%1.1f%%', colors=colors, shadow=True, startangle=90)
+    ax.legend(lista_categorias, loc="center right",
+              bbox_to_anchor=(1.55, 0.50))
+
+    canva_categoria = FigureCanvasTkAgg(figura, frame_gra_2)
+    canva_categoria.get_tk_widget().grid(row=0, column=0)
+
+
+frame_renda = Frame(frameBaixo, width=300, height=250, bg=co1)
+frame_renda.grid(row=0, column=0)
+
+frame_operacoes = Frame(frameBaixo, width=220, height=250, bg=co1)
+frame_operacoes.grid(row=0, column=1, padx=5)
+
+frame_configuracao = Frame(frameBaixo, width=220, height=250, bg=co1)
+frame_configuracao.grid(row=0, column=2, padx=5)
+
+
+# Tabela Renda mensal ---------------------------------------------------------
+l_income = Label(frameMeio, text="Tabela Receitas e Despesas",
+                 height=1, anchor=NW, font=('Geometria 12'), bg=co1, fg=co4)
+l_income.place(x=5, y=309)
+
+# funcao para mostrar_renda
+
+
+def mostrar_renda():
+    # criando uma visualização em árvore com barras de rolagem duplas
+    tabela_head = ['Item', 'Categoria', 'Data', 'Quantidade']
+
+    lista_itens = [[0, 2, 3, 4], [0, 2, 3, 4], [0, 2, 3, 4], [0, 2, 3, 4],
+                   [0, 2, 3, 4], [0, 2, 3, 4], [0, 2, 3, 4], [0, 2, 3, 4],
+                   [0, 2, 3, 4], [0, 2, 3, 4], [0, 2, 3, 4], [0, 2, 3, 4]]
+
+    global tree
+
+    tree = ttk.Treeview(frame_renda, selectmode="extended",
+                        columns=tabela_head, show="headings")
+    # vertical scrollbar
+    vsb = ttk.Scrollbar(frame_renda, orient="vertical", command=tree.yview)
+
+    # horizontal scrollbar
+    hsb = ttk.Scrollbar(frame_renda, orient="horizontal", command=tree.xview)
+
+    tree.configure(yscrollcommand=vsb.set, xscrollcommand=hsb.set)
+    tree.grid(column=0, row=0, sticky='nsew')
+    vsb.grid(column=1, row=0, sticky='ns')
+    hsb.grid(column=0, row=1, sticky='ew')
+
+    hd = ["center", "center", "center", "center"]
+    h = [30, 100, 100, 100]
+    n = 0
+
+    for col in tabela_head:
+        tree.heading(col, text=col.title(), anchor=CENTER)
+        # adjust the column's width to the header string
+        tree.column(col, width=h[n], anchor=hd[n])
+
+        n += 1
+
+    for item in lista_itens:
+        tree.insert('', 'end', values=item)
+
+
 percentagem()
 grafico_bar()
 resumo()
+grafico_pie()
+mostrar_renda()
 janela.mainloop()
-
-# # ----------------------------------------------------------------------------------------
-
-# # funcao grafico pie
-# def grafico_pie():
-#     # faça figura e atribua objetos de eixo
-#     figura = plt.Figure(figsize=(5, 3), dpi=90)
-#     ax = figura.add_subplot(111)
-#     lista_valores = [345, 225, 534]
-#     lista_categorias = ['Renda', 'Despesa', 'Saldo']
-
-#     # only "explode" the 2nd slice (i.e. 'Hogs')
-#     explode = []
-#     for i in lista_categorias:
-#         explode.append(0.05)
-#     ax.pie(lista_valores, explode=explode, wedgeprops=dict(width=0.2),
-#            autopct='%1.1f%%', colors=colors, shadow=True, startangle=90)
-#     ax.legend(lista_categorias, loc="center right",
-#               bbox_to_anchor=(1.55, 0.50))
-
-#     canva_categoria = FigureCanvasTkAgg(figura, frame_gra_2)
-#     canva_categoria.get_tk_widget().grid(row=0, column=0)
-
-
-# grafico_pie()
-
-
-# frame_renda = Frame(frameBaixo, width=300, height=250, bg=co1)
-# frame_renda.grid(row=0, column=0)
-
-# frame_operacoes = Frame(frameBaixo, width=220, height=250, bg=co1)
-# frame_operacoes.grid(row=0, column=1, padx=5)
-
-# frame_configuracao = Frame(frameBaixo, width=220, height=250, bg=co1)
-# frame_configuracao.grid(row=0, column=2, padx=5)
-
-
-# # Tabela Renda mensal -------------------------
-# l_income = Label(frameMeio, text="Tabela Receitas e Despesas",
-#                  height=1, anchor=NW, font=('Geometria 12'), bg=co1, fg=co4)
-# l_income.place(x=5, y=309)
-
-# # funcao para mostrar_renda
-
-
-# def mostrar_renda():
-#     # creating a treeview with dual scrollbars
-#     tabela_head = ['#Id', 'Categoria', 'Data', 'Quantia']
-
-#     lista_itens = [[0, 2, 3, 4], [0, 2, 3, 4], [0, 2, 3, 4], [0, 2, 3, 4]]
-
-#     global tree
-
-#     tree = ttk.Treeview(frame_renda, selectmode="extended",
-#                         columns=tabela_head, show="headings")
-#     # vertical scrollbar
-#     vsb = ttk.Scrollbar(frame_renda, orient="vertical", command=tree.yview)
-
-#     # horizontal scrollbar
-#     hsb = ttk.Scrollbar(frame_renda, orient="horizontal", command=tree.xview)
-
-#     tree.configure(yscrollcommand=vsb.set, xscrollcommand=hsb.set)
-#     tree.grid(column=0, row=0, sticky='nsew')
-#     vsb.grid(column=1, row=0, sticky='ns')
-#     hsb.grid(column=0, row=1, sticky='ew')
-
-#     hd = ["center", "center", "center", "center"]
-#     h = [30, 100, 100, 100]
-#     n = 0
-
-#     for col in tabela_head:
-#         tree.heading(col, text=col.title(), anchor=CENTER)
-#         # adjust the column's width to the header string
-#         tree.column(col, width=h[n], anchor=hd[n])
-
-#         n += 1
-
-#     for item in lista_itens:
-#         tree.insert('', 'end', values=item)
-
-
-# mostrar_renda()
 
 
 # # Configuracoes Despesas -----------------------------------
