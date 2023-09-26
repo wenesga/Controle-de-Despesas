@@ -253,13 +253,21 @@ def ver_imagem():
 
 
 def percentagem():
-    l_nome = Label(frameMeio, text="Porcentagem Gastos",
+    l_nome = Label(frameMeio, text="Total Gasto",
                    height=1, anchor=NW, font=('Geometria 12 '), bg=co1, fg=co4)
     l_nome.place(x=7, y=5)
 
     style = ttk.Style()
     style.theme_use('default')
-    style.configure("black.Horizontal.TProgressbar", background=co10)
+
+    valor = 30
+    # print(valor)
+
+    if valor > 50:
+        style.configure("black.Horizontal.TProgressbar", background='#ff5747')
+    else:
+        style.configure("black.Horizontal.TProgressbar", background=co10)
+
     style.configure("TProgressbar", thickness=20)
 
     bar = Progressbar(frameMeio, length=180,
@@ -268,8 +276,6 @@ def percentagem():
     bar.place(x=10, y=35)
     bar['value'] = 50
 
-    valor = 50
-    # print(valor)
     l_percentagem = Label(frameMeio, text='{:,.2f} %'.format(
         valor), height=1, anchor=NW, font=('Geometria 12 '), bg=co1, fg=co4)
     l_percentagem.place(x=200, y=35)
@@ -329,7 +335,7 @@ def resumo():
 
     l_linha = Label(frameMeio, text="", width=215, height=1,
                     anchor=NW, font=('arial 1 '), bg='#545454',)
-    l_linha.place(x=309, y=54)
+    l_linha.place(x=309, y=54)  # Traço em baixo do texto Salário
 
     l_sumario = Label(frameMeio, text="Salário                                    ".upper(
     ), height=1, anchor=NW, font=('Geometria 12'), bg=co1, fg='#4583de')
@@ -341,7 +347,7 @@ def resumo():
 
     l_linha = Label(frameMeio, text="", width=215, height=1,
                     anchor=NW, font=('arial 1 '), bg='#545454',)
-    l_linha.place(x=309, y=134)
+    l_linha.place(x=309, y=134)  # Traço em baixo do texto Despesas
 
     l_sumario = Label(frameMeio, text="Despesas                                  ".upper(
     ), height=1, anchor=NW, font=('Geometria 12'), bg=co1, fg='#ff5747')
@@ -353,7 +359,7 @@ def resumo():
 
     l_linha = Label(frameMeio, text="", width=215, height=1,
                     anchor=NW, font=('arial 1 '), bg='#545454',)
-    l_linha.place(x=309, y=209)
+    l_linha.place(x=309, y=209)  # Traço em baixo do texto Saldo
 
     l_sumario = Label(frameMeio, text="Saldo                                        ".upper(
     ), height=1, anchor=NW, font=('Geometria 12'), bg=co1, fg='#68c985')
