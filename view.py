@@ -42,7 +42,7 @@ def inserir_gastos(i):
 # Deletar Receitas
 def deletar_receitas(i):
     with con:
-        cur = con.corsor()
+        cur = con.cursor()
         query = "DELETE FROM Receitas WHERE id=?"
         cur.execute(query, i)
 
@@ -50,7 +50,7 @@ def deletar_receitas(i):
 # Deletar Gastos
 def deletar_gastos(i):
     with con:
-        cur = con.corsor()
+        cur = con.cursor()
         query = "DELETE FROM Gastos WHERE id=?"
         cur.execute(query, i)
 

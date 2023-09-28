@@ -13,7 +13,7 @@ from matplotlib.figure import Figure
 from tkcalendar import Calendar, DateEntry
 from datetime import date
 # Importando funções da view
-from view import bar_valores, inserir_categoria, ver_categorias, inserir_receita, inserir_gastos
+from view import bar_valores, inserir_categoria, ver_categorias, inserir_receita, inserir_gastos, tabela, deletar_gastos, deletar_receitas
 
 """ Projeto: Controle de Despesas Pessoal
     @Autor: Wenes Aquino              """
@@ -102,7 +102,7 @@ def inserir_categoria_b():
 
     # Passando funcao inserir gastos presente na view
     inserir_categoria(lista_inserir)
-    messagebox.showinfo('Sucesso', 'Categoria inserido com sucesso')
+    messagebox.showinfo('Sucesso', 'Categoria inserido com sucesso!')
     e_categoria.delete(0, 'end')
 
     # Pegando os valores da categoria
@@ -131,7 +131,7 @@ def inserir_receitas_b():
 
     # Chamando funcao inserir Receita presente na view
     inserir_receita(lista_inserir)
-    messagebox.showinfo('Sucesso', 'Receita inserido com sucesso')
+    messagebox.showinfo('Sucesso', 'Receita inserido com sucesso!')
 
     e_cal_receitas.delete(0, 'end')
     e_valor_receitas.delete(0, 'end')
@@ -145,7 +145,7 @@ def inserir_receitas_b():
 
 
 # Funcao inserir Despesa-------------------------------------------------------
-def inserir_receitas_b():
+def inserir_despesas_b():
     nome = combo_categoria_despesas.get()
     data = e_cal_despeas.get()
     quantia = e_valor_despesas.get()
@@ -173,10 +173,39 @@ def inserir_receitas_b():
     grafico_pie()
 
 
+# Funcao deletar
+def deletar_dados():
+    try:
+        treev_dados = tree.focus()
+        treev_dicionario = tree.item(treev_dados)
+        treev_lista = treev_dicionario['values']
+        valor = treev_lista[0]
+        nome = treev_lista[1]
 
+        if nome == 'Receita':
+            deletar_receitas([valor])
+            messagebox.showinfo('Sucesso', 'Excluido com sucesso!')
 
+            # Atualizando dados
+            mostrar_renda()
+            percentagem()
+            grafico_bar()
+            resumo()
+            grafico_pie()
 
+        else:
+            deletar_gastos([valor])
+            messagebox.showinfo('Sucesso', 'Excluido com sucesso!')
 
+            # Atualizando dados
+            mostrar_renda()
+            percentagem()
+            grafico_bar()
+            resumo()
+            grafico_pie()
+
+    except IndexError:
+        messagebox.showerror('Erro', 'Seleciona um dos dados na tabela')
 
 
 # funcao Atualizar-------------------------------------------------------------
@@ -357,9 +386,9 @@ def mostrar_renda():
     # criando uma visualização em árvore com barras de rolagem duplas
     tabela_head = ['Cod', 'Categoria', 'Data', 'Qtd']
 
-    lista_itens = [[0, 2, 3, 4], [0, 2, 3, 4], [0, 2, 3, 4], [0, 2, 3, 4]]
+    lista_itens = tabela()
 
-    # global tree
+    global tree
 
     tree = ttk.Treeview(frame_renda, selectmode="extended", columns=tabela_head, show="headings")
 
@@ -433,7 +462,7 @@ e_valor_despesas.place(x=110, y=101)
 img_add_despesas = Image.open('image/add.png')
 img_add_despesas = img_add_despesas.resize((17, 17))
 img_add_despesas = ImageTk.PhotoImage(img_add_despesas)
-botao_inserir_despesas = Button(frame_operacoes, command=inserir_receitas_b, image=img_add_despesas, compound=LEFT, anchor=NW, text="".upper(), width=19, overrelief=RIDGE,  font=('ivy 7 bold'), bg=co1, fg=co0)
+botao_inserir_despesas = Button(frame_operacoes, command=inserir_despesas_b, image=img_add_despesas, compound=LEFT, anchor=NW, text="".upper(), width=19, overrelief=RIDGE,  font=('ivy 7 bold'), bg=co1, fg=co0)
 botao_inserir_despesas.place(x=110, y=131)
 
 
@@ -446,7 +475,7 @@ l_excluir.place(x=10, y=190)
 img_delete = Image.open('image/delete.png')
 img_delete = img_delete.resize((17, 17))
 img_delete = ImageTk.PhotoImage(img_delete)
-botao_deletar = Button(frame_operacoes, image=img_delete, compound=LEFT, anchor=NW, text="".upper(), width=19, overrelief=RIDGE,  font=('ivy 7 bold'), bg=co1, fg=co0)
+botao_deletar = Button(frame_operacoes, command=deletar_dados, image=img_delete, compound=LEFT, anchor=NW, text="".upper(), width=19, overrelief=RIDGE,  font=('ivy 7 bold'), bg=co1, fg=co0)
 botao_deletar.place(x=110, y=190)
 
 
