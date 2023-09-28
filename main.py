@@ -3,20 +3,15 @@ import tkinter as tk
 from tkinter import Tk, StringVar, ttk
 from tkinter import messagebox
 from PIL import Image, ImageTk
-
 # Importando barra de progresso Tkinter ==>
 from tkinter.ttk import Progressbar
-
 # Importando Matplotlib
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
-
-
 # tkcalendar
 from tkcalendar import Calendar, DateEntry
 from datetime import date
-
 # Importando funções da view
 from view import bar_valores, inserir_categoria, ver_categorias, inserir_receita, inserir_gastos
 
@@ -143,8 +138,12 @@ def inserir_receitas_b():
     e_cal_receitas.delete(0, 'end')
     e_valor_receitas.delete(0, 'end')
 
-
-
+    # Atualizando dados
+    mostrar_renda()
+    percentagem()
+    grafico_bar()
+    resumo()
+    grafico_pie()
 
 
 
@@ -228,7 +227,7 @@ def grafico_bar():
     # ax.autoscale(enable=True, axis='both', tight=None)
     ax.bar(lista_categorias, lista_valores,  color=colors, width=0.9)
 
-    # create a list to collect the plt.patches data
+    # cria uma lista para coletar os dados plt.patches
     c = 0
 
 
@@ -450,7 +449,7 @@ e_valor_receitas.place(x=110, y=71)
 img_add_receitas = Image.open('add.png')
 img_add_receitas = img_add_receitas.resize((17, 17))
 img_add_receitas = ImageTk.PhotoImage(img_add_receitas)
-botao_inserir_receitas = Button(frame_configuracao, image=img_add_receitas, compound=LEFT, anchor=NW, text=" Adicionar".upper(), width=80, overrelief=RIDGE,  font=('ivy 7 bold'), bg=co1, fg=co0)
+botao_inserir_receitas = Button(frame_configuracao, command=inserir_receitas_b, image=img_add_receitas, compound=LEFT, anchor=NW, text=" Adicionar".upper(), width=80, overrelief=RIDGE,  font=('ivy 7 bold'), bg=co1, fg=co0)
 botao_inserir_receitas.place(x=110, y=111)
 
 
