@@ -1,8 +1,11 @@
 import sqlite3 as lite  # Importando SQLite
+import pandas as pd
+
+
 def limpa(): return print("\033[2J\033[;H", end='')
-
-
 limpa()
+
+
 """ Projeto: Controle de Despesas Pessoal
     @Autor: Wenes Aquino              """
 # -----------------------------------------------------------------------------
@@ -10,9 +13,8 @@ limpa()
 # Criando Coneccao
 con = lite.connect('dados.db')
 
+
 # Inserir Categoria
-
-
 def inserir_categoria(i):
     with con:
         cur = con.cursor()
@@ -22,8 +24,6 @@ def inserir_categoria(i):
 # Funçoes para Inserir---------------------------------------------------------
 
 # Inserir Receitas
-
-
 def inserir_receita(i):
     with con:
         cur = con.cursor()
@@ -31,9 +31,7 @@ def inserir_receita(i):
         cur.execute(query, i)
 
 # Inserir Gastos
-
-
-def inserir_gasto(i):
+def inserir_gastos(i):
     with con:
         cur = con.cursor()
         query = "INSERT INTO Gastos (categoria, retirado_em, valor) VALUES (?,?,?)"
@@ -42,8 +40,6 @@ def inserir_gasto(i):
 # Funçoes para Deletar---------------------------------------------------------
 
 # Deletar Receitas
-
-
 def deletar_receitas(i):
     with con:
         cur = con.corsor()
@@ -52,7 +48,6 @@ def deletar_receitas(i):
 
 
 # Deletar Gastos
-
 def deletar_gastos(i):
     with con:
         cur = con.corsor()
@@ -60,7 +55,6 @@ def deletar_gastos(i):
         cur.execute(query, i)
 
 # Funçao para ver Dados--------------------------------------------------------
-
 
 # Ver Categorias
 def ver_categorias():
@@ -76,9 +70,7 @@ def ver_categorias():
 
 
 # Ver Receitas
-
-
-def ver_Receitas():
+def ver_receitas():
     lista_itens = []
 
     with con:
@@ -90,8 +82,6 @@ def ver_Receitas():
     return lista_itens
 
 # Ver Gastos
-
-
 def ver_gastos():
     lista_itens = []
 
@@ -106,7 +96,7 @@ def ver_gastos():
 
 def tabela():
     gastos = ver_gastos()
-    receitas = ver_Receitas()
+    receitas = ver_receitas()
 
     tabela_lista = []
 
@@ -120,8 +110,9 @@ def tabela():
 
 
 def bar_valores():
+
     # Receita Total ------------------------
-    receitas = ver_Receitas()
+    receitas = ver_receitas()
     receitas_lista = []
 
     for i in receitas:
@@ -147,7 +138,7 @@ def bar_valores():
 def percentagem_valor():
 
     # Receita Total ------------------------
-    receitas = ver_Receitas()
+    receitas = ver_receitas()
     receitas_lista = []
 
     for i in receitas:
