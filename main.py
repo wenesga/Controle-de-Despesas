@@ -16,7 +16,7 @@ from datetime import date
 from view import bar_valores, pie_valores, percentagem_valor, inserir_categoria, ver_categorias, inserir_receita, inserir_gastos, tabela, deletar_gastos, deletar_receitas
 
 """ Projeto: Controle de Despesas Pessoal
-    @Autor: Wenes Aquino              """
+    @Autor: Wenes Aquino - 29/09/2023                                    """
 # ================= cores =====================================================
 co0 = "#2e2d2b"   # Preta
 co1 = "#ffffff"   # branca
