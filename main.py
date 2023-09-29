@@ -13,7 +13,7 @@ from matplotlib.figure import Figure
 from tkcalendar import Calendar, DateEntry
 from datetime import date
 # Importando funções da view
-from view import bar_valores, inserir_categoria, ver_categorias, inserir_receita, inserir_gastos, tabela, deletar_gastos, deletar_receitas
+from view import bar_valores, pie_valores, inserir_categoria, ver_categorias, inserir_receita, inserir_gastos, tabela, deletar_gastos, deletar_receitas
 
 """ Projeto: Controle de Despesas Pessoal
     @Autor: Wenes Aquino              """
@@ -57,7 +57,7 @@ style = ttk.Style(janela)
 # Tema
 style.theme_use("default") 
 # Modifique a fonte das celulas da tabela
-style.configure("Treeview", highlightthickness=0, bd=0, font=('Geometria', 11))
+style.configure("Treeview", highlightthickness=0, bd=0, font=('Geometria', 13))
 
 
 # ================= Frames Cima =================
@@ -240,7 +240,7 @@ def ver_imagem():
 
 # percentagem -----------------------------------------------------------------
 def percentagem():
-    l_nome = Label(frameMeio, text="Total Gasto", height=1, anchor=NW, font=('Geometria 12 '), bg=co1, fg=co4)
+    l_nome = Label(frameMeio, text="Total de Gastos", height=1, anchor=NW, font=('Geometria 14 bold'), bg=co1, fg=co4)
     l_nome.place(x=7, y=5)
 
     style = ttk.Style()
@@ -272,8 +272,8 @@ def percentagem():
 def grafico_bar():
 
     # obtendo valores de meses
-    lista_categorias = ['Receita', 'Despesa', 'Saldo']
-    lista_valores = [1000, 300, 700]
+    lista_categorias = ['Renda', 'Gastos', 'Saldo']
+    lista_valores = bar_valores() #############################################
 
     # faça figura e atribua objetos de eixo
     figura = plt.Figure(figsize=(4, 3.45), dpi=60)
@@ -316,38 +316,31 @@ def grafico_bar():
 
 # funcao de resumo total# -----------------------------------------------------
 def resumo():
+    valor = bar_valores() #####################################################
 
-    valor = [1000, 300, 700]
-
-    l_linha = Label(frameMeio, text="", width=215, height=1, anchor=NW, font=('arial 1 '), bg='#545454',)
+    l_linha = Label(frameMeio, text="", width=215, height=1, anchor=NW, font=('Geometria 1 '), bg='#545454',)
     l_linha.place(x=309, y=54)  # Traço em baixo do texto Salário
-    l_sumario = Label(frameMeio, text="Receira                                     ".upper(), height=1, anchor=NW, font=('Geometria 12'), bg=co1, fg='#4583de')
+    l_sumario = Label(frameMeio, text="Renda                                          ".upper(), height=1, anchor=NW, font=('Geometria 12 bold'), bg=co1, fg='#4583de')
     l_sumario.place(x=306, y=35)
 
-
-    l_sumario = Label(frameMeio, text='R$ {:,.2f}'.format(valor[0]), height=1, anchor=NW, font=('arial 15 '), bg=co1, fg='#545454')
+    l_sumario = Label(frameMeio, text='R$ {:,.2f}'.format(valor[0]), height=1, anchor=NW, font=('Geometria 15 bold'), bg=co1, fg='#545454')
     l_sumario.place(x=306, y=70)
 
-
-    l_linha = Label(frameMeio, text="", width=215, height=1, anchor=NW, font=('arial 1 '), bg='#545454',)
+    l_linha = Label(frameMeio, text="", width=215, height=1, anchor=NW, font=('Geometria 1 '), bg='#545454',)
     l_linha.place(x=309, y=134)  # Traço em baixo do texto Despesas
-    l_sumario = Label(frameMeio, text="Despesas                                  ".upper(), height=1, anchor=NW, font=('Geometria 12'), bg=co1, fg=co13)
+    l_sumario = Label(frameMeio, text="Gastos                                         ".upper(), height=1, anchor=NW, font=('Geometria 12 bold'), bg=co1, fg=co13)
     l_sumario.place(x=306, y=115)
 
-
-    l_sumario = Label(frameMeio, text='R$ {:,.2f}'.format(valor[1]), height=1, anchor=NW, font=('arial 15 '), bg=co1, fg='#545454')
+    l_sumario = Label(frameMeio, text='R$ {:,.2f}'.format(valor[1]), height=1, anchor=NW, font=('Geometria 15 bold'), bg=co1, fg='#545454')
     l_sumario.place(x=306, y=150)
 
-
-    l_linha = Label(frameMeio, text="", width=215, height=1, anchor=NW, font=('arial 1 '), bg='#545454',)
+    l_linha = Label(frameMeio, text="", width=215, height=1, anchor=NW, font=('Geometria 1 '), bg='#545454',)
     l_linha.place(x=309, y=209)  # Traço em baixo do texto Saldo
-    l_sumario = Label(frameMeio, text="Saldo                                        ".upper(), height=1, anchor=NW, font=('Geometria 12'), bg=co1, fg='#68c985')
+    l_sumario = Label(frameMeio, text="Saldo                                          ".upper(), height=1, anchor=NW, font=('Geometria 12 bold'), bg=co1, fg='#68c985')
     l_sumario.place(x=306, y=190)
 
-
-    l_sumario = Label(frameMeio, text='R$ {:,.2f}'.format(valor[2]), height=1, anchor=NW, font=('arial 15 '), bg=co1, fg='#545454')
+    l_sumario = Label(frameMeio, text='R$ {:,.2f}'.format(valor[2]), height=1, anchor=NW, font=('Geometria 15 bold'), bg=co1, fg='#545454')
     l_sumario.place(x=306, y=220)
-
 
 
 # funcao grafico pie-----------------------------------------------------------
@@ -355,8 +348,9 @@ def grafico_pie():
     # faça figura e atribua objetos de eixo
     figura = plt.Figure(figsize=(5, 3), dpi=90)
     ax = figura.add_subplot(111)
-    lista_valores = [345, 225, 534]
-    lista_categorias = ['Receita', 'Despesa', 'Saldo']
+
+    lista_valores = pie_valores()[1] #############################################
+    lista_categorias = pie_valores()[0]
 
     explode = []
     for i in lista_categorias:
@@ -379,7 +373,7 @@ frame_configuracao.grid(row=0, column=2, padx=5)
 
 
 # Tabela Renda mensal ---------------------------------------------------------
-app_tabela = Label(frameMeio, text="Tabela Receitas e Despesas", height=1, anchor=NW, font=('Geometria 12'), bg=co1, fg=co4)
+app_tabela = Label(frameMeio, text="Tabela Renda e Gastos", height=1, anchor=NW, font=('Geometria 14 bold'), bg=co1, fg=co4)
 app_tabela.place(x=5, y=309)
 
 
@@ -431,7 +425,7 @@ l_info.place(x=10, y=10)
 
 
 # Categoria
-l_categoria = Label(frame_operacoes, text="Categoria", height=1, anchor=NW, relief="flat", font=('Ivy 10'), bg=co11, fg=co4)
+l_categoria = Label(frame_operacoes, text="Categoria", height=1, anchor=NW, relief="flat", font=('Geometria 10'), bg=co11, fg=co4)
 l_categoria.place(x=10, y=40)
 
 
@@ -443,23 +437,23 @@ for i in categorias_funcao:
     categorias.append(i[1])
 
 combo_categoria_despesas = ttk.Combobox(
-    frame_operacoes, width=12, font=('Ivy 10'))
+    frame_operacoes, width=10, font=('Geometria 10'))
 
 combo_categoria_despesas['values'] = (categorias)
 combo_categoria_despesas.place(x=110, y=41)
 
 
 # Despesas---------------------------------------------------------------------
-l_cal_despeas = Label(frame_operacoes, text="Data", height=1, anchor=NW, font=('Ivy 10 '), bg=co11, fg=co4)
+l_cal_despeas = Label(frame_operacoes, text="Data", height=1, anchor=NW, font=('Geometria 10 '), bg=co11, fg=co4)
 l_cal_despeas.place(x=10, y=70)
-e_cal_despeas = DateEntry(frame_operacoes, width=12, background='darkblue', foreground='white', borderwidth=2, year=2020)
+e_cal_despeas = DateEntry(frame_operacoes, width=10, background='darkblue', foreground='white', borderwidth=2, year=2023)
 e_cal_despeas.place(x=110, y=71)
 
 
 # Valor------------------------------------------------------------------------
-l_valor_despesas = Label(frame_operacoes, text="Quantia Total", height=1, anchor=NW, font=('Ivy 10 '), bg=co11, fg=co4)
+l_valor_despesas = Label(frame_operacoes, text="Quantia Total", height=1, anchor=NW, font=('Geometria 10 '), bg=co11, fg=co4)
 l_valor_despesas.place(x=10, y=100)
-e_valor_despesas = Entry(frame_operacoes, width=14, justify='left', relief="solid")
+e_valor_despesas = Entry(frame_operacoes, width=11, justify='left', relief="solid")
 e_valor_despesas.place(x=110, y=101)
 
 
@@ -467,12 +461,12 @@ e_valor_despesas.place(x=110, y=101)
 img_add_despesas = Image.open('image/add.png')
 img_add_despesas = img_add_despesas.resize((17, 17))
 img_add_despesas = ImageTk.PhotoImage(img_add_despesas)
-botao_inserir_despesas = Button(frame_operacoes, command=inserir_despesas_b, image=img_add_despesas, compound=LEFT, anchor=NW, text="".upper(), width=19, overrelief=RIDGE,  font=('ivy 7 bold'), bg=co1, fg=co0)
+botao_inserir_despesas = Button(frame_operacoes, command=inserir_despesas_b, image=img_add_despesas, compound=LEFT, anchor=NW, text="".upper(), width=19, overrelief=RIDGE,  font=('Geometria 7 bold'), bg=co1, fg=co0)
 botao_inserir_despesas.place(x=110, y=131)
 
 
 # Operacao Excluir ------------------------------------------------------------
-l_excluir = Label(frame_operacoes, text="Excluir Ação", height=1, anchor=NW, font=('Ivy 10 bold'), bg=co11, fg=co4)
+l_excluir = Label(frame_operacoes, text="Excluir Ação", height=1, anchor=NW, font=('Geometria 10 bold'), bg=co11, fg=co4)
 l_excluir.place(x=10, y=190)
 
 
@@ -480,7 +474,7 @@ l_excluir.place(x=10, y=190)
 img_delete = Image.open('image/delete.png')
 img_delete = img_delete.resize((17, 17))
 img_delete = ImageTk.PhotoImage(img_delete)
-botao_deletar = Button(frame_operacoes, command=deletar_dados, image=img_delete, compound=LEFT, anchor=NW, text="".upper(), width=19, overrelief=RIDGE,  font=('ivy 7 bold'), bg=co1, fg=co0)
+botao_deletar = Button(frame_operacoes, command=deletar_dados, image=img_delete, compound=LEFT, anchor=NW, text="".upper(), width=19, overrelief=RIDGE,  font=('Geometria 7 bold'), bg=co1, fg=co0)
 botao_deletar.place(x=110, y=190)
 
 
@@ -490,16 +484,16 @@ l_info.place(x=10, y=10)
 
 
 # Calendario-------------------------------------------------------------------
-l_cal_receitas = Label(frame_configuracao, text="Data", height=1, anchor=NW, font=('Ivy 10 '), bg=co12, fg=co4)
+l_cal_receitas = Label(frame_configuracao, text="Data", height=1, anchor=NW, font=('Geometria 10 '), bg=co12, fg=co4)
 l_cal_receitas.place(x=10, y=40)
-e_cal_receitas = DateEntry(frame_configuracao, width=12, background='darkblue', foreground='white', borderwidth=2, year=2020)
+e_cal_receitas = DateEntry(frame_configuracao, width=10, background='darkblue', foreground='white', borderwidth=2, year=2023)
 e_cal_receitas.place(x=110, y=41)
 
 
 # Valor -----------------------------------------------------------------------
-l_valor_receitas = Label(frame_configuracao, text="Quantia Total", height=1, anchor=NW, font=('Ivy 10 '), bg=co12, fg=co4)
+l_valor_receitas = Label(frame_configuracao, text="Quantia Total", height=1, anchor=NW, font=('Geometria 10 '), bg=co12, fg=co4)
 l_valor_receitas.place(x=10, y=70)
-e_valor_receitas = Entry(frame_configuracao, width=14, justify='left', relief="solid")
+e_valor_receitas = Entry(frame_configuracao, width=11, justify='left', relief="solid")
 e_valor_receitas.place(x=110, y=71)
 
 
@@ -507,14 +501,14 @@ e_valor_receitas.place(x=110, y=71)
 img_add_receitas = Image.open('image/add.png')
 img_add_receitas = img_add_receitas.resize((17, 17))
 img_add_receitas = ImageTk.PhotoImage(img_add_receitas)
-botao_inserir_receitas = Button(frame_configuracao, command=inserir_receitas_b, image=img_add_receitas, compound=LEFT, anchor=NW, text="".upper(), width=19, overrelief=RIDGE,  font=('ivy 7 bold'), bg=co1, fg=co0)
+botao_inserir_receitas = Button(frame_configuracao, command=inserir_receitas_b, image=img_add_receitas, compound=LEFT, anchor=NW, text="".upper(), width=19, overrelief=RIDGE,  font=('Geometria 7 bold'), bg=co1, fg=co0)
 botao_inserir_receitas.place(x=110, y=111)
 
 
 # Operacao Nova Categoria -----------------------------------------------------
-l_info = Label(frame_configuracao, text="Categoria", height=1, anchor=NW, font=('Ivy 10 bold'), bg=co12, fg=co4)
+l_info = Label(frame_configuracao, text="Categoria", height=1, anchor=NW, font=('Geometria 10 bold'), bg=co12, fg=co4)
 l_info.place(x=10, y=160)
-e_categoria = Entry(frame_configuracao, width=14, justify='left', relief="solid")
+e_categoria = Entry(frame_configuracao, width=11, justify='left', relief="solid")
 e_categoria.place(x=110, y=160)
 
 
@@ -522,7 +516,7 @@ e_categoria.place(x=110, y=160)
 img_add_categoria = Image.open('image/add.png')
 img_add_categoria = img_add_categoria.resize((17, 17))
 img_add_categoria = ImageTk.PhotoImage(img_add_categoria)
-botao_inserir_categoria = Button(frame_configuracao, command=inserir_categoria_b, image=img_add_categoria, compound=LEFT, anchor=NW, text="".upper(), width=19, overrelief=RIDGE,  font=('ivy 7 bold'), bg=co1, fg=co0)
+botao_inserir_categoria = Button(frame_configuracao, command=inserir_categoria_b, image=img_add_categoria, compound=LEFT, anchor=NW, text="".upper(), width=19, overrelief=RIDGE,  font=('Geometria 7 bold'), bg=co1, fg=co0)
 botao_inserir_categoria.place(x=110, y=190)
 
 
