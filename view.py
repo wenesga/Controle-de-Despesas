@@ -151,7 +151,10 @@ def percentagem_valor():
     gasto_total = sum(gastos_lista)
 
     # Porcentagem Total ----------------------------------------------------------
-    total = ((receita_total - gasto_total) / receita_total) * 100
+    if receita_total != 0:
+        total = 100 - ((receita_total - gasto_total) / receita_total) * 100
+    else:
+        total = 0
 
     return [total]
 
@@ -173,25 +176,3 @@ def pie_valores():# -----------------------------------------------------------
         lista_categorias.append(i)
 
     return ([lista_categorias, lista_quantias])
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -13,7 +13,7 @@ from matplotlib.figure import Figure
 from tkcalendar import Calendar, DateEntry
 from datetime import date
 # Importando funções da view
-from view import bar_valores, pie_valores, inserir_categoria, ver_categorias, inserir_receita, inserir_gastos, tabela, deletar_gastos, deletar_receitas
+from view import bar_valores, pie_valores, percentagem_valor, inserir_categoria, ver_categorias, inserir_receita, inserir_gastos, tabela, deletar_gastos, deletar_receitas
 
 """ Projeto: Controle de Despesas Pessoal
     @Autor: Wenes Aquino              """
@@ -210,12 +210,6 @@ def deletar_dados():
         messagebox.showerror('Erro', 'Seleciona um dos dados na tabela')
 
 
-# funcao Atualizar-------------------------------------------------------------
-
-
-# funcao Deletar---------------------------------------------------------------
-
-
 # funcao para abrir imagem-----------------------------------------------------
 def ver_imagem():
     global l_imagem, imagem, imagem_string
@@ -246,22 +240,25 @@ def percentagem():
     style = ttk.Style()
     style.theme_use('default')
 
-    valor = 30
-    # print(valor)
+    valor = percentagem_valor()[0]
 
-    # Condicao para cor da barra de progresso
+    # Condicao para alterar cor da barra de progresso entre vermelho e verde
     if valor > 50:
+
         style.configure("black.Horizontal.TProgressbar", background=co13)
+
     else:
+
         style.configure("black.Horizontal.TProgressbar", background=co10)
+
 
     style.configure("TProgressbar", thickness=20)
 
-    bar = Progressbar(frameMeio, length=180,
-                      style='black.Horizontal.TProgressbar')
-
+    bar = Progressbar(frameMeio, length=180, style='black.Horizontal.TProgressbar')
     bar.place(x=10, y=35)
-    bar['value'] = 50
+    bar['value'] = percentagem_valor()[0]
+
+    
 
     l_percentagem = Label(frameMeio, text='{:,.2f} %'.format(valor), height=1, anchor=NW, font=('Geometria 12 '), bg=co1, fg=co4)
     l_percentagem.place(x=200, y=35)
@@ -414,9 +411,6 @@ def mostrar_renda():
 
     for item in lista_itens:
         tree.insert('', 'end', values=item)
-
-
-
 
 
 # Configuracoes Despesas ------------------------------------------------------
