@@ -2,17 +2,13 @@ import sqlite3 as lite  # Importando SQLite
 import pandas as pd
 
 
-def limpa(): return print("\033[2J\033[;H", end='')
-limpa()
-
-
 """ Projeto: Controle de Despesas Pessoal
-    @Autor: Wenes Aquino              """
+    @Autor: Wenes Aquino   
+           """
 # -----------------------------------------------------------------------------
-
 # Criando Coneccao
 con = lite.connect('dados.db')
-
+# -----------------------------------------------------------------------------
 
 # Inserir Categoria
 def inserir_categoria(i):
@@ -22,7 +18,6 @@ def inserir_categoria(i):
         cur.execute(query, i)
 
 # Funçoes para Inserir---------------------------------------------------------
-
 # Inserir Receitas
 def inserir_receita(i):
     with con:
@@ -38,7 +33,6 @@ def inserir_gastos(i):
         cur.execute(query, i)
 
 # Funçoes para Deletar---------------------------------------------------------
-
 # Deletar Receitas
 def deletar_receitas(i):
     with con:
@@ -54,8 +48,8 @@ def deletar_gastos(i):
         query = "DELETE FROM Gastos WHERE id=?"
         cur.execute(query, i)
 
-# Funçao para ver Dados--------------------------------------------------------
 
+# Funçao para ver Dados--------------------------------------------------------
 # Ver Categorias
 def ver_categorias():
     lista_itens = []
@@ -94,6 +88,7 @@ def ver_gastos():
     return lista_itens
 
 
+# -----------------------------------------------------------------------------
 def tabela():
     gastos = ver_gastos()
     receitas = ver_receitas()
@@ -111,7 +106,7 @@ def tabela():
 
 def bar_valores():
 
-    # Receita Total ------------------------
+    # Receita Total -----------------------------------------------------------
     receitas = ver_receitas()
     receitas_lista = []
 
@@ -120,16 +115,16 @@ def bar_valores():
 
     receita_total = sum(receitas_lista)
 
-    # Despesas Total ------------------------
-    receitas = ver_gastos()
-    despesas_lista = []
+    # Despesas Total ----------------------------------------------------------
+    gastos = ver_gastos()
+    gastos_lista = []
 
-    for i in receitas:
-        despesas_lista.append(i[3])
+    for i in gastos:
+        gastos_lista.append(i[3])
 
-    despesas_total = sum(despesas_lista)
+    despesas_total = sum(gastos_lista)
 
-    # Despesas Total ------------------------
+    # Despesas Total ----------------------------------------------------------
     saldo_total = receita_total - despesas_total
 
     return [receita_total, despesas_total, saldo_total]
@@ -137,7 +132,7 @@ def bar_valores():
 
 def percentagem_valor():
 
-    # Receita Total ------------------------
+    # Receita Total -----------------------------------------------------------
     receitas = ver_receitas()
     receitas_lista = []
 
@@ -146,7 +141,7 @@ def percentagem_valor():
 
     receita_total = sum(receitas_lista)
 
-    # Despesas Total ------------------------
+    # Despesas Total ----------------------------------------------------------
     receitas = ver_gastos()
     despesas_lista = []
 
@@ -155,7 +150,7 @@ def percentagem_valor():
 
     despesas_total = sum(despesas_lista)
 
-    # Despesas Total ------------------------
+    # Despesas Total ----------------------------------------------------------
     total = ((receita_total - despesas_total) / receita_total) * 100
 
     return [total]
@@ -171,7 +166,7 @@ def pie_valores():
     dataframe = pd.DataFrame(tabela_lista, columns=[
                              'id', 'Categoria', 'Data', 'valor'])
 
-    # Get the sum of the durations per month
+    # Obtenha a soma das durações por mês
     dataframe = dataframe.groupby('Categoria')['valor'].sum()
 
     lista_quantias = dataframe.values.tolist()

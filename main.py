@@ -54,8 +54,10 @@ janela.configure(background=co1)
 janela.resizable(width=FALSE, height=FALSE)
 
 style = ttk.Style(janela)
-style.theme_use("default")  # Tema
-style.configure("Treeview", highlightthickness=0, bd=0, font=('Geometria', 9)) # Modifique a fonte do corpo
+# Tema
+style.theme_use("default") 
+# Modifique a fonte das celulas da tabela
+style.configure("Treeview", highlightthickness=0, bd=0, font=('Geometria', 11))
 
 
 # ================= Frames Cima =================
@@ -393,7 +395,7 @@ def mostrar_renda():
     tree = ttk.Treeview(frame_renda, selectmode="extended", columns=tabela_head, show="headings")
 
     # vertical scrollbar
-    vsb = ttk.Scrollbar(frame_renda, orient="vertical", command=tree.yview)
+    vsb = ttk.Scrollbar()
 
     # horizontal scrollbar
     hsb = ttk.Scrollbar(frame_renda, orient="horizontal", command=tree.xview)
@@ -405,7 +407,7 @@ def mostrar_renda():
     hsb.grid(column=0, row=1, sticky='ew')
 
     hd = ["center", "center", "center", "center"]
-    h = [50, 150, 120, 50]
+    h = [45, 130, 130, 80]
     n = 0
 
     for col in tabela_head:
@@ -418,6 +420,9 @@ def mostrar_renda():
 
     for item in lista_itens:
         tree.insert('', 'end', values=item)
+
+
+
 
 
 # Configuracoes Despesas ------------------------------------------------------
