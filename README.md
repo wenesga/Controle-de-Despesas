@@ -6,3 +6,17 @@ Aplicativo em Python de Controle de Despesa Pessoal
 ![ScreenShot_20230928110114](https://github.com/wenesga/Controle-de-Despesas/assets/13321239/1e33ed33-9e98-4eb2-964e-2ef83d181775)
 
 ![ScreenShot_20230929193832](https://github.com/wenesga/Controle-de-Despesas/assets/13321239/3d405741-5a31-4eb5-b176-f1dafdc82299)
+
+## Versão Web (melhorada)
+
+Uma versão web foi adicionada em `web/` com dashboard, lançamentos, categorias e gráfico por categoria.
+
+### Como executar
+
+```bash
+cd web
+pip install -r requirements.txt
+python app.py
+```
+
+Depois acesse `http://127.0.0.1:5000`.

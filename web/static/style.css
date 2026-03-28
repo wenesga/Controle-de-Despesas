@@ -1,0 +1,17 @@
+body {
+  background: #f5f8fc;
+}
+
+.stat-card p {
+  font-size: 1.6rem;
+  margin: 0;
+  font-weight: 700;
+}
+
+.stat-card.success {
+  border-left: 6px solid #198754;
+}
+
+.stat-card.danger {
+  border-left: 6px solid #dc3545;
+}
