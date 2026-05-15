@@ -13,7 +13,7 @@ from matplotlib.figure import Figure
 from tkcalendar import Calendar, DateEntry
 from datetime import date
 # Importando funções da view
-from view import bar_valores, pie_valores, percentagem_valor, inserir_categoria, ver_categorias, inserir_receita, inserir_gastos, tabela, deletar_gastos, deletar_receitas
+from view import bar_valores, pie_valores, percentagem_valor, inserir_categoria, ver_categorias, inserir_receita, inserir_gastos, tabela, deletar_gastos, deletar_receitas, ver_iten
 
 """ Projeto: Controle de Despesas Pessoal
     @Autor: Wenes Aquino - 29/09/2023                                    """

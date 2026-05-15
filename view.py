@@ -10,6 +10,27 @@ import pandas as pd
 con = lite.connect('dados.db')
 # -----------------------------------------------------------------------------
 
+
+# Inicializa schema básico caso o banco ainda não exista
+def inicializar_banco():
+    with con:
+        cur = con.cursor()
+        cur.execute("CREATE TABLE IF NOT EXISTS Categoria(id INTEGER PRIMARY KEY, nome TEXT)")
+        cur.execute("CREATE TABLE IF NOT EXISTS Receitas(id INTEGER PRIMARY KEY, categoria TEXT, adicionando_em DATE, valor DECIMAL)")
+        cur.execute("CREATE TABLE IF NOT EXISTS Gastos(id INTEGER PRIMARY KEY, categoria TEXT, retirado_em DATE, valor DECIMAL)")
+
+# Ver item por id (usado em rotinas de detalhe)
+def ver_iten(i):
+    lista_itens = []
+    with con:
+        cur = con.cursor()
+        query = "SELECT * FROM Gastos WHERE id=?"
+        cur.execute(query, i)
+        linha = cur.fetchall()
+        for l in linha:
+            lista_itens.append(l)
+    return lista_itens
+
 # Inserir Categoria
 def inserir_categoria(i):
     with con:
@@ -176,3 +197,6 @@ def pie_valores():# -----------------------------------------------------------
         lista_categorias.append(i)
 
     return ([lista_categorias, lista_quantias])
+
+# Garante que as tabelas existam ao importar o módulo
+inicializar_banco()
