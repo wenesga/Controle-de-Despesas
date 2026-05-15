@@ -18,14 +18,16 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 4) Criar banco de dados (primeira execução)
-```bash
-python criardb.py
-```
-
-### 5) Iniciar o app
+### 4) Iniciar o app
 ```bash
 python main.py
+```
+
+> O app já cria as tabelas automaticamente caso o banco não exista.
+
+### 5) (Opcional) Criar banco manualmente
+```bash
+python criardb.py
 ```
 
 ## Observações
